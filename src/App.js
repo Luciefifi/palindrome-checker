@@ -34,7 +34,7 @@ function App() {
         <form onSubmit={handleSubmit}>
           <input
             type='text'
-            placeholder="Enter a word"
+            placeholder="Enter a word to check "
             value={word}
             onChange={(e) => { setWord(e.target.value) }}
           />
