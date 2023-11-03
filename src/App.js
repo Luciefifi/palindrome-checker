@@ -1,25 +1,52 @@
-import logo from './logo.svg';
-import './App.css';
+
+import React, { useState } from "react";
+import './index.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
+  const [word, setWord] = useState('');
+
+  const checkPalindrome = (wordToCheck) => {
+    let alphanumericOnly = wordToCheck.toLowerCase().match(/[a-z0-9]/g);
+    if (!alphanumericOnly) {
+      toast.error('No alphanumeric characters found in the text');
+      return;
+    }
+    alphanumericOnly = alphanumericOnly.join('');
+    const reversedWord = alphanumericOnly.split('').reverse().join('');
+    if (alphanumericOnly === reversedWord) {
+      toast.success('The text is a palindrome');
+    } else {
+      toast.error('The word is not a palindrome');
+    }
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    checkPalindrome(word);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="container">
+        <h1>PALINDROME CHECKER</h1>
+        <form onSubmit={handleSubmit}>
+          <input
+            type='text'
+            placeholder="Enter a word"
+            value={word}
+            onChange={(e) => { setWord(e.target.value) }}
+          />
+          <button type="submit">Check</button>
+        </form>
+        <ToastContainer />
+      </div>
     </div>
   );
 }
 
 export default App;
+
+
+
